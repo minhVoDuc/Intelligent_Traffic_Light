@@ -50,7 +50,9 @@ void timer_list_add(struct timer_unit *unit){
 	}
 	if (prev == NULL) { //new unit is added before the head
 		unit->nextTimer = curr;
+		curr->duration -= unit->duration;
 		timerList.head = unit;
+		timerList.size++;
 		return;
 	}
 	prev->nextTimer = unit;
@@ -81,15 +83,16 @@ void timer_init(){
 }
 
 void timer_run(){
-	if (timerList.head->duration) {
+	if (timerList.size == 0) return;
+	if (timerList.head->duration >= 0) {
 		timerList.head->duration--;
-	}
-	else {
-		uint8_t index = 0;
-		while(timerList.size && timerList.head->duration == 0) {
-			index = timerList.head->index;
-			timerFlag[index] = 1;
-			timer_list_pop();
+		if (timerList.head->duration <= 0) {
+			uint8_t index = 0;
+			while(timerList.size && timerList.head->duration == 0) {
+				index = timerList.head->index;
+				timerFlag[index] = 1;
+				timer_list_pop();
+			}
 		}
 	}
 }
