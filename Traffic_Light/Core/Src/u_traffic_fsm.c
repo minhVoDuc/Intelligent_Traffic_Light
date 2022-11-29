@@ -159,6 +159,13 @@ void traffic_manual_fsm() {
 }
 
 /*-------------------- set fsm -------------------------*/
+void duration_inc(uint8_t led_type) {
+	trafficDuration[led_type] += DURATION_UNIT;
+	if (trafficDuration[led_type] > DURATION_MAX) { //if duration over max, reset to DURATION_UNIT
+		trafficDuration[led_type] -= DURATION_MAX;
+	}
+}
+
 void traffic_set_fsm() {
 	switch(set_state) {
 	case SET_INIT:
@@ -166,12 +173,25 @@ void traffic_set_fsm() {
 		break;
 	case SET_RED:
 		//change led
-		if (button_isPressed(BTN_2)){
+		if (button_isPressed(BTN_2)) {
 			set_state = SET_GREEN;
 		}
 		//TODO
 		led_turn_on(TRAFFIC_1, LED_RED);
 		led_turn_on(TRAFFIC_2, LED_RED);
+		//increase duration; max: 10000ms
+		if (button_isPressed(BTN_3)) { //for one-pressed button
+			duration_inc(LED_RED);
+			timer_setDuration(TIMER_SET_LONG, 10); //set timer for long press
+		}
+		if (button_isLongPressed(BTN_3)) { //for long-pressed button
+			if (timer_checkFlag(TIMER_SET_LONG)) {
+				duration_inc(LED_RED);
+				timer_setDuration(TIMER_SET_LONG, 500);
+			}
+		}
+		else timer_clear(TIMER_SET_LONG);
+
 		break;
 	case SET_GREEN:
 		//change led
@@ -182,6 +202,19 @@ void traffic_set_fsm() {
 		//TODO
 		led_turn_on(TRAFFIC_1, LED_GREEN);
 		led_turn_on(TRAFFIC_2, LED_GREEN);
+		//increase duration; max: 10000ms
+		if (button_isPressed(BTN_3)) { //for one-pressed button
+			duration_inc(LED_GREEN);
+			timer_setDuration(TIMER_SET_LONG, 10); //set timer for long press
+		}
+		if (button_isLongPressed(BTN_3)) { //for long-pressed button
+			if (timer_checkFlag(TIMER_SET_LONG)) {
+				duration_inc(LED_GREEN);
+				timer_setDuration(TIMER_SET_LONG, 500);
+			}
+		}
+		else timer_clear(TIMER_SET_LONG);
+
 		break;
 	case SET_YELLOW:
 		//change led
@@ -192,6 +225,19 @@ void traffic_set_fsm() {
 		//TODO
 		led_turn_on(TRAFFIC_1, LED_YELLOW);
 		led_turn_on(TRAFFIC_2, LED_YELLOW);
+		//increase duration; max: 10000ms
+		if (button_isPressed(BTN_3)) { //for one-pressed button
+			duration_inc(LED_YELLOW);
+			timer_setDuration(TIMER_SET_LONG, 10); //set timer for long press
+		}
+		if (button_isLongPressed(BTN_3)) { //for long-pressed button
+			if (timer_checkFlag(TIMER_SET_LONG)) {
+				duration_inc(LED_YELLOW);
+				timer_setDuration(TIMER_SET_LONG, 500);
+			}
+		}
+		else timer_clear(TIMER_SET_LONG);
+
 		break;
 	default:
 		break;
