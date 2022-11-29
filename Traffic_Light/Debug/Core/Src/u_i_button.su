@@ -1,0 +1,4 @@
+u_i_button.c:34:6:button_reading	16	static
+u_i_button.c:76:6:subKeyProcess	16	static
+u_i_button.c:87:5:button_isPressed	16	static
+u_i_button.c:95:5:button_isLongPressed	16	static

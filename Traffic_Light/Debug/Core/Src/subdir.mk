@@ -15,7 +15,9 @@ C_SRCS += \
 ../Core/Src/u_i_button.c \
 ../Core/Src/u_i_buzzer.c \
 ../Core/Src/u_i_led.c \
-../Core/Src/u_i_timer.c 
+../Core/Src/u_i_timer.c \
+../Core/Src/u_test_IO.c \
+../Core/Src/u_traffic_fsm.c 
 
 OBJS += \
 ./Core/Src/main.o \
@@ -28,7 +30,9 @@ OBJS += \
 ./Core/Src/u_i_button.o \
 ./Core/Src/u_i_buzzer.o \
 ./Core/Src/u_i_led.o \
-./Core/Src/u_i_timer.o 
+./Core/Src/u_i_timer.o \
+./Core/Src/u_test_IO.o \
+./Core/Src/u_traffic_fsm.o 
 
 C_DEPS += \
 ./Core/Src/main.d \
@@ -41,7 +45,9 @@ C_DEPS += \
 ./Core/Src/u_i_button.d \
 ./Core/Src/u_i_buzzer.d \
 ./Core/Src/u_i_led.d \
-./Core/Src/u_i_timer.d 
+./Core/Src/u_i_timer.d \
+./Core/Src/u_test_IO.d \
+./Core/Src/u_traffic_fsm.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

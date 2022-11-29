@@ -23,6 +23,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "u_global.h"
+#include "u_test_IO.h"
+#include "u_traffic_fsm.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -97,6 +99,8 @@ int main(void)
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
+  timer_init();
+  traffic_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -106,6 +110,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  traffic_fsm();
+//	  test_button();
   }
   /* USER CODE END 3 */
 }
@@ -335,7 +341,8 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-
+	timer_run();
+	button_reading();
 }
 /* USER CODE END 4 */
 

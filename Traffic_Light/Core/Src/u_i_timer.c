@@ -61,7 +61,9 @@ void timer_list_add(struct timer_unit *unit){
 		unit->duration -= totalDuration;
 	}
 	else{
-		unit->duration -= (totalDuration - prev->duration);
+		uint32_t tmp = unit->duration;
+		unit->duration -= (totalDuration - curr->duration);
+		curr->duration = (totalDuration - tmp);
 	}
 	timerList.size++;
 }
@@ -108,4 +110,29 @@ uint8_t	timer_checkFlag(uint8_t index) {
 		return 1;
 	}
 	return 0;
+}
+
+void timer_clear(uint8_t index) {
+//	uint32_t totalDuration = 0;
+	timerFlag[index] = 0;
+	struct timer_unit *curr = timerList.head,
+			          *prev = NULL;
+	while (curr != NULL) {
+		if (curr->index == index) break;
+
+//		totalDuration += curr->duration;
+		prev = curr;
+		curr = curr->nextTimer;
+	}
+
+	if (curr == NULL) return;
+	if (prev == NULL) { //item at the head of list
+		timerList.head = curr->nextTimer;
+	}
+	else {
+		prev->nextTimer = curr->nextTimer;
+	}
+	if (curr->nextTimer != NULL) curr->nextTimer->duration += curr->duration;
+	timer_unit_destruct(curr);
+	timerList.size--;
 }
