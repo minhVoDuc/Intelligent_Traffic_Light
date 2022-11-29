@@ -16,7 +16,8 @@ C_SRCS += \
 ../Core/Src/system_stm32f1xx.c \
 ../Core/Src/test_IO.c \
 ../Core/Src/timer.c \
-../Core/Src/traffic_fsm.c 
+../Core/Src/traffic_fsm.c \
+../Core/Src/uart.c 
 
 OBJS += \
 ./Core/Src/button.o \
@@ -30,7 +31,8 @@ OBJS += \
 ./Core/Src/system_stm32f1xx.o \
 ./Core/Src/test_IO.o \
 ./Core/Src/timer.o \
-./Core/Src/traffic_fsm.o 
+./Core/Src/traffic_fsm.o \
+./Core/Src/uart.o 
 
 C_DEPS += \
 ./Core/Src/button.d \
@@ -44,7 +46,8 @@ C_DEPS += \
 ./Core/Src/system_stm32f1xx.d \
 ./Core/Src/test_IO.d \
 ./Core/Src/timer.d \
-./Core/Src/traffic_fsm.d 
+./Core/Src/traffic_fsm.d \
+./Core/Src/uart.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

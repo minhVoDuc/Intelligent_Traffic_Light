@@ -7,6 +7,7 @@
 
 #include "traffic_fsm.h"
 #include "global.h"
+#include "uart.h"
 
 /*-------------------- init setting --------------------*/
 uint32_t	trafficDuration[3] = {2000, 1200, 800};
@@ -184,11 +185,15 @@ void traffic_set_fsm() {
 	switch(set_state) {
 	case SET_INIT:
 		set_state = SET_RED;
+		uart_send_num("Led red: ", trafficDuration[LED_RED]);
 		break;
 	case SET_RED:
 		//change led
 		if (button_isPressed(BTN_2)) {
 			set_state = SET_GREEN;
+#ifdef PROTEUS
+			uart_send_num("Led green: ", trafficDuration[LED_GREEN]);
+#endif
 		}
 		//TODO
 		led_turn_off(TRAFFIC_1, LED_YELLOW);
@@ -198,21 +203,30 @@ void traffic_set_fsm() {
 		//increase duration; max: 10000ms
 		if (button_isPressed(BTN_3)) { //for one-pressed button
 			duration_inc(LED_RED);
+			timer_clear(TIMER_SET_LONG);
 			timer_setDuration(TIMER_SET_LONG, 10); //set timer for long press
+#ifdef PROTEUS
+			uart_send_num("Changing: ", trafficDuration[LED_RED]);
+#endif
 		}
 		if (button_isLongPressed(BTN_3)) { //for long-pressed button
 			if (timer_checkFlag(TIMER_SET_LONG)) {
 				duration_inc(LED_RED);
 				timer_setDuration(TIMER_SET_LONG, 500);
+#ifdef PROTEUS
+				uart_send_num("Changing 2: ", trafficDuration[LED_RED]);
+#endif
 			}
 		}
-		else timer_clear(TIMER_SET_LONG);
 
 		break;
 	case SET_GREEN:
 		//change led
 		if (button_isPressed(BTN_2)){
 			set_state = SET_YELLOW;
+#ifdef PROTEUS
+			uart_send_num("Led yellow: ", trafficDuration[LED_YELLOW]);
+#endif
 		}
 
 		//TODO
@@ -223,21 +237,30 @@ void traffic_set_fsm() {
 		//increase duration; max: 10000ms
 		if (button_isPressed(BTN_3)) { //for one-pressed button
 			duration_inc(LED_GREEN);
+			timer_clear(TIMER_SET_LONG);
 			timer_setDuration(TIMER_SET_LONG, 10); //set timer for long press
+#ifdef PROTEUS
+			uart_send_num("Changing: ", trafficDuration[LED_GREEN]);
+#endif
 		}
 		if (button_isLongPressed(BTN_3)) { //for long-pressed button
 			if (timer_checkFlag(TIMER_SET_LONG)) {
 				duration_inc(LED_GREEN);
 				timer_setDuration(TIMER_SET_LONG, 500);
+#ifdef PROTEUS
+				uart_send_num("Changing 2: ", trafficDuration[LED_GREEN]);
+#endif
 			}
 		}
-		else timer_clear(TIMER_SET_LONG);
 
 		break;
 	case SET_YELLOW:
 		//change led
 		if (button_isPressed(BTN_2)){
 			set_state = SET_RED;
+#ifdef PROTEUS
+			uart_send_num("Led red: ", trafficDuration[LED_RED]);
+#endif
 		}
 
 		//TODO
@@ -248,15 +271,21 @@ void traffic_set_fsm() {
 		//increase duration; max: 10000ms
 		if (button_isPressed(BTN_3)) { //for one-pressed button
 			duration_inc(LED_YELLOW);
+			timer_clear(TIMER_SET_LONG);
 			timer_setDuration(TIMER_SET_LONG, 10); //set timer for long press
+#ifdef PROTEUS
+			uart_send_num("Changing: ", trafficDuration[LED_YELLOW]);
+#endif
 		}
 		if (button_isLongPressed(BTN_3)) { //for long-pressed button
 			if (timer_checkFlag(TIMER_SET_LONG)) {
 				duration_inc(LED_YELLOW);
 				timer_setDuration(TIMER_SET_LONG, 500);
+#ifdef PROTEUS
+				uart_send_num("Changing 2: ", trafficDuration[LED_YELLOW]);
+#endif
 			}
 		}
-		else timer_clear(TIMER_SET_LONG);
 
 		break;
 	default:
@@ -270,12 +299,18 @@ void traffic_fsm() {
 	case INIT_MODE:
 		led_clear_all();
 		global_state = AUTO_MODE;
+#ifdef PROTEUS
+		uart_send_str("AUTO MODE:");
+#endif
 		break;
 
 	///////////////////////////////////////////////
 	case AUTO_MODE:
 		//change mode
 		if (button_isPressed(BTN_1)) { //when pressing button 1
+#ifdef PROTEUS
+			uart_send_str("MANUAL MODE:");
+#endif
 			led_clear_all();
 			global_state = MANUAL_MODE;
 			switch (auto_A_state) { //manual mode with previous auto state
@@ -310,12 +345,11 @@ void traffic_fsm() {
 	case MANUAL_MODE:
 		//change mode
 		if (button_isPressed(BTN_1)) { //when pressing button 1
+#ifdef PROTEUS
+			uart_send_str("SET MODE:");
+#endif
 			global_state = SET_MODE;
 			set_state = SET_INIT;
-			auto_A_state = AUTO_INIT;
-			auto_B_state = AUTO_INIT;
-			timer_clear(TIMER_AUTO_A);
-			timer_clear(TIMER_AUTO_B);
 			led_clear_all();
 			return;
 		}
@@ -328,34 +362,39 @@ void traffic_fsm() {
 	case SET_MODE:
 		//change mode
 		if (button_isPressed(BTN_1)) { //when pressing button 1
+#ifdef PROTEUS
+			uart_send_str("AUTO MODE:");
+#endif
 			global_state = AUTO_MODE;
+			timer_clear(TIMER_AUTO_A);
+			timer_clear(TIMER_AUTO_B);
 			led_clear_all();
-//			switch(manual_state) { //auto mode with previous manual state
-//			case MN_RED0:
-//				auto_A_state = AUTO_RED;
-//				timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_RED]);
-//				auto_B_state = AUTO_GREEN;
-//				timer_setDuration(TIMER_AUTO_B, trafficDuration[LED_GREEN]);
-//				break;
-//			case MN_RED1:
-//				auto_A_state = AUTO_RED;
-//				timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_YELLOW]);
-//				auto_B_state = AUTO_YELLOW;
-//				timer_setDuration(TIMER_AUTO_B, trafficDuration[LED_YELLOW]);
-//				break;
-//			case MN_GREEN:
-//				auto_A_state = AUTO_GREEN;
-//				timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_GREEN]);
-//				auto_B_state = AUTO_RED;
-//				timer_setDuration(TIMER_AUTO_B, trafficDuration[LED_RED]);
-//				break;
-//			case MN_YELLOW:
-//				auto_A_state = AUTO_YELLOW;
-//				timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_YELLOW]);
-//				auto_B_state = AUTO_RED;
-//				timer_setDuration(TIMER_AUTO_B, trafficDuration[LED_YELLOW]);
-//				break;
-//			}
+			switch(manual_state) { //auto mode with previous manual state
+			case MN_RED0:
+				auto_A_state = AUTO_RED;
+				timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_RED]);
+				auto_B_state = AUTO_GREEN;
+				timer_setDuration(TIMER_AUTO_B, trafficDuration[LED_GREEN]);
+				break;
+			case MN_RED1:
+				auto_A_state = AUTO_RED;
+				timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_YELLOW]);
+				auto_B_state = AUTO_YELLOW;
+				timer_setDuration(TIMER_AUTO_B, trafficDuration[LED_YELLOW]);
+				break;
+			case MN_GREEN:
+				auto_A_state = AUTO_GREEN;
+				timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_GREEN]);
+				auto_B_state = AUTO_RED;
+				timer_setDuration(TIMER_AUTO_B, trafficDuration[LED_RED]);
+				break;
+			case MN_YELLOW:
+				auto_A_state = AUTO_YELLOW;
+				timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_YELLOW]);
+				auto_B_state = AUTO_RED;
+				timer_setDuration(TIMER_AUTO_B, trafficDuration[LED_YELLOW]);
+				break;
+			}
 			return;
 		}
 

@@ -10,7 +10,7 @@
 #include "timer.h"
 
 //Init time for long press
-#define	LONG_DURATION	300
+#define	LONG_DURATION	200
 
 //Work for multiple buttons
 #define IS_PRESSED		GPIO_PIN_RESET

@@ -16,12 +16,14 @@
   *
   ******************************************************************************
   */
+
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 #include "global.h"
 #include "test_IO.h"
 #include "traffic_fsm.h"
@@ -44,6 +46,8 @@
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim2;
 
+UART_HandleTypeDef huart2;
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -52,13 +56,18 @@ TIM_HandleTypeDef htim2;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM2_Init(void);
+static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+	if (huart->Instance == USART2) {
+		uart_init();
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -90,6 +99,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM2_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
   timer_init();
@@ -99,38 +109,17 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   timer_setDuration(TIMER_TEST_0, 500);
-//  timer_setDuration(TIMER_AUTO_A, 5000);
-//  timer_setDuration(TIMER_AUTO_B, 2000);
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//	if (timer_checkFlag(TIMER_TEST_0)) {
-//		timer_setDuration(TIMER_TEST_0, 500);
-//		HAL_GPIO_TogglePin(GPIOA, LED_TEST_0_Pin);
-//	}
-//	if (timer_checkFlag(TIMER_AUTO_A)) {
-//		timer_setDuration(TIMER_AUTO_A, 5000);
-//		HAL_GPIO_TogglePin(GPIOA, GREEN_0_Pin);
-//	}
-//	if (timer_checkFlag(TIMER_AUTO_B)) {
-//		timer_setDuration(TIMER_AUTO_B, 2000);
-//		HAL_GPIO_TogglePin(GPIOA, YELLOW_0_Pin);
-//	}
+	if (timer_checkFlag(TIMER_TEST_0)) {
+		timer_setDuration(TIMER_TEST_0, 500);
+		HAL_GPIO_TogglePin(GPIOA, LED_TEST_0_Pin);
+	}
 	traffic_fsm();
 //	test_button();
-//	if (button_isPressed(BTN_1)){
-//		led_turn_on(TRAFFIC_1, LED_RED);
-//		led_turn_on(TRAFFIC_1, LED_GREEN);
-//		led_turn_on(TRAFFIC_1, LED_YELLOW);
-//	}
-//	if (button_isPressed(BTN_2)){
-//		led_turn_on(TRAFFIC_2, LED_RED);
-//		led_turn_on(TRAFFIC_2, LED_GREEN);
-//		led_turn_on(TRAFFIC_2, LED_YELLOW);
-//	}
-//	if (button_isPressed(BTN_3)) led_clear_all();
   }
   /* USER CODE END 3 */
 }
@@ -216,6 +205,39 @@ static void MX_TIM2_Init(void)
 }
 
 /**
+  * @brief USART2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART2_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART2_Init 0 */
+
+  /* USER CODE END USART2_Init 0 */
+
+  /* USER CODE BEGIN USART2_Init 1 */
+
+  /* USER CODE END USART2_Init 1 */
+  huart2.Instance = USART2;
+  huart2.Init.BaudRate = 9600;
+  huart2.Init.WordLength = UART_WORDLENGTH_8B;
+  huart2.Init.StopBits = UART_STOPBITS_1;
+  huart2.Init.Parity = UART_PARITY_NONE;
+  huart2.Init.Mode = UART_MODE_TX_RX;
+  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART2_Init 2 */
+
+  /* USER CODE END USART2_Init 2 */
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -231,8 +253,8 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, LED_TEST_0_Pin|RED_0_Pin|GREEN_0_Pin|YELLOW_0_Pin
                           |RED_1_Pin|GREEN_1_Pin|YELLOW_1_Pin, GPIO_PIN_SET);
 
-  /*Configure GPIO pins : BTN_1_Pin BTN_2_Pin BTN_3_Pin */
-  GPIO_InitStruct.Pin = BTN_1_Pin|BTN_2_Pin|BTN_3_Pin;
+  /*Configure GPIO pins : BTN_1_Pin BTN_2_Pin BTN_3_archv_Pin BTN_3_Pin */
+  GPIO_InitStruct.Pin = BTN_1_Pin|BTN_2_Pin|BTN_3_archv_Pin|BTN_3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);

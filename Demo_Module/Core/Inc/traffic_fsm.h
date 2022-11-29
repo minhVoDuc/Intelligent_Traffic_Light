@@ -38,7 +38,7 @@
 // for traffic duration
 #define DURATION_MAX	10000 //max duration = 10000ms ~ 10s
 #define DURATION_UNIT	1000 //1000ms
-uint32_t	trafficDuration[3];
+extern uint32_t	trafficDuration[3];
 
 void duration_inc(uint8_t led_type);
 

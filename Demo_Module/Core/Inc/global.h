@@ -14,6 +14,7 @@
 //#include "buzzer.h"
 #include "led.h"
 #include "timer.h"
+#include "uart.h"
 
 extern uint8_t global_state;
 extern uint8_t auto_A_state;

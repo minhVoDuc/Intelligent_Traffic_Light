@@ -23,8 +23,10 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  ../Core/Inc/global.h ../Core/Inc/button.h ../Core/Inc/led.h \
- ../Core/Inc/timer.h ../Core/Inc/test_IO.h ../Core/Inc/traffic_fsm.h
+ ../Core/Inc/timer.h ../Core/Inc/uart.h ../Core/Inc/main.h \
+ ../Core/Inc/test_IO.h ../Core/Inc/traffic_fsm.h
 
 ../Core/Inc/main.h:
 
@@ -76,6 +78,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
 
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
+
 ../Core/Inc/global.h:
 
 ../Core/Inc/button.h:
@@ -83,6 +87,10 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/led.h:
 
 ../Core/Inc/timer.h:
+
+../Core/Inc/uart.h:
+
+../Core/Inc/main.h:
 
 ../Core/Inc/test_IO.h:
 

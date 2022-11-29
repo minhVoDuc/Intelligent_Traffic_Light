@@ -62,8 +62,12 @@ void Error_Handler(void);
 #define BTN_1_GPIO_Port GPIOA
 #define BTN_2_Pin GPIO_PIN_1
 #define BTN_2_GPIO_Port GPIOA
-#define BTN_3_Pin GPIO_PIN_2
-#define BTN_3_GPIO_Port GPIOA
+#define TX_Pin GPIO_PIN_2
+#define TX_GPIO_Port GPIOA
+#define RX_Pin GPIO_PIN_3
+#define RX_GPIO_Port GPIOA
+#define BTN_3_archv_Pin GPIO_PIN_4
+#define BTN_3_archv_GPIO_Port GPIOA
 #define LED_TEST_0_Pin GPIO_PIN_5
 #define LED_TEST_0_GPIO_Port GPIOA
 #define RED_0_Pin GPIO_PIN_6
@@ -78,6 +82,8 @@ void Error_Handler(void);
 #define GREEN_1_GPIO_Port GPIOA
 #define YELLOW_1_Pin GPIO_PIN_11
 #define YELLOW_1_GPIO_Port GPIOA
+#define BTN_3_Pin GPIO_PIN_12
+#define BTN_3_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
