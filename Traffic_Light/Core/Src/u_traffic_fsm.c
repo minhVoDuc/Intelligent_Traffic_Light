@@ -170,11 +170,19 @@ void traffic_set_fsm() {
 	switch(set_state) {
 	case SET_INIT:
 		set_state = SET_RED;
+#ifdef PROTEUS
+		uart_send_num("Led red: ", trafficDuration[LED_RED]);
+#endif
 		break;
+
+	//////////////////////////////////////////////////////////////
 	case SET_RED:
 		//change led
 		if (button_isPressed(BTN_2)) {
 			set_state = SET_GREEN;
+#ifdef PROTEUS
+			uart_send_num("Led green: ", trafficDuration[LED_GREEN]);
+#endif
 		}
 		//TODO
 		led_turn_on(TRAFFIC_1, LED_RED);
@@ -182,21 +190,32 @@ void traffic_set_fsm() {
 		//increase duration; max: 10000ms
 		if (button_isPressed(BTN_3)) { //for one-pressed button
 			duration_inc(LED_RED);
+			timer_clear(TIMER_SET_LONG);
 			timer_setDuration(TIMER_SET_LONG, 10); //set timer for long press
+#ifdef PROTEUS
+			uart_send_num("Changing: ", trafficDuration[LED_RED]);
+#endif
 		}
 		if (button_isLongPressed(BTN_3)) { //for long-pressed button
 			if (timer_checkFlag(TIMER_SET_LONG)) {
 				duration_inc(LED_RED);
 				timer_setDuration(TIMER_SET_LONG, 500);
+#ifdef PROTEUS
+				uart_send_num("Changing 2: ", trafficDuration[LED_RED]);
+#endif
 			}
 		}
-		else timer_clear(TIMER_SET_LONG);
 
 		break;
+
+	//////////////////////////////////////////////////////////////
 	case SET_GREEN:
 		//change led
 		if (button_isPressed(BTN_2)){
 			set_state = SET_YELLOW;
+#ifdef PROTEUS
+			uart_send_num("Led yellow: ", trafficDuration[LED_YELLOW]);
+#endif
 		}
 
 		//TODO
@@ -205,21 +224,32 @@ void traffic_set_fsm() {
 		//increase duration; max: 10000ms
 		if (button_isPressed(BTN_3)) { //for one-pressed button
 			duration_inc(LED_GREEN);
+			timer_clear(TIMER_SET_LONG);
 			timer_setDuration(TIMER_SET_LONG, 10); //set timer for long press
+#ifdef PROTEUS
+			uart_send_num("Changing: ", trafficDuration[LED_GREEN]);
+#endif
 		}
 		if (button_isLongPressed(BTN_3)) { //for long-pressed button
 			if (timer_checkFlag(TIMER_SET_LONG)) {
 				duration_inc(LED_GREEN);
 				timer_setDuration(TIMER_SET_LONG, 500);
+#ifdef PROTEUS
+				uart_send_num("Changing 2: ", trafficDuration[LED_GREEN]);
+#endif
 			}
 		}
-		else timer_clear(TIMER_SET_LONG);
 
 		break;
+
+	//////////////////////////////////////////////////////////////
 	case SET_YELLOW:
 		//change led
 		if (button_isPressed(BTN_2)){
 			set_state = SET_RED;
+#ifdef PROTEUS
+			uart_send_num("Led red: ", trafficDuration[LED_RED]);
+#endif
 		}
 
 		//TODO
@@ -228,17 +258,25 @@ void traffic_set_fsm() {
 		//increase duration; max: 10000ms
 		if (button_isPressed(BTN_3)) { //for one-pressed button
 			duration_inc(LED_YELLOW);
+			timer_clear(TIMER_SET_LONG);
 			timer_setDuration(TIMER_SET_LONG, 10); //set timer for long press
+#ifdef PROTEUS
+			uart_send_num("Changing: ", trafficDuration[LED_YELLOW]);
+#endif
 		}
 		if (button_isLongPressed(BTN_3)) { //for long-pressed button
 			if (timer_checkFlag(TIMER_SET_LONG)) {
 				duration_inc(LED_YELLOW);
 				timer_setDuration(TIMER_SET_LONG, 500);
+#ifdef PROTEUS
+				uart_send_num("Changing 2: ", trafficDuration[LED_YELLOW]);
+#endif
 			}
 		}
-		else timer_clear(TIMER_SET_LONG);
 
 		break;
+
+	//////////////////////////////////////////////////////////////
 	default:
 		break;
 	}
