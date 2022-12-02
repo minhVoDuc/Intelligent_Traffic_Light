@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#define MAX_TIMER 	3
+#define MAX_TIMER 	4
 #define CYCLE		10 //TIM20 = 10ms ~ 100Hz
 
 struct timer_unit {
@@ -29,6 +29,7 @@ struct timer_list {
 #define TIMER_AUTO_A	0
 #define TIMER_AUTO_B	1
 #define TIMER_SET_LONG	2
+#define TIMER_PD		3
 
 
 //  unit function

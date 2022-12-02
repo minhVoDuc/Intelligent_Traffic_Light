@@ -1,0 +1,7 @@
+u_fsm_traffic.c:13:6:traffic_init	4	static
+u_fsm_traffic.c:22:6:traffic_auto_fsm_A	8	static
+u_fsm_traffic.c:74:6:traffic_auto_fsm_B	8	static
+u_fsm_traffic.c:125:6:traffic_manual_fsm	8	static
+u_fsm_traffic.c:193:6:duration_inc	16	static
+u_fsm_traffic.c:201:6:traffic_set_fsm	8	static
+u_fsm_traffic.c:316:6:traffic_fsm	8	static

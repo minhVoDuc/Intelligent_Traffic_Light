@@ -5,8 +5,8 @@
  *      Author: Guest_demo
  */
 
-#ifndef INC_U_TRAFFIC_FSM_H_
-#define INC_U_TRAFFIC_FSM_H_
+#ifndef INC_U_FSM_TRAFFIC_H_
+#define INC_U_FSM_TRAFFIC_H_
 
 #include <stdint.h>
 
@@ -38,8 +38,6 @@
 // for traffic duration
 #define DURATION_MAX	10000 //max duration = 10000ms ~ 10s
 #define DURATION_UNIT	1000 //1000ms
-uint32_t	trafficDuration[3];
-
 void duration_inc(uint8_t led_type);
 
 // for fsm
@@ -50,4 +48,4 @@ void traffic_auto_fsm_B();
 void traffic_manual_fsm();
 void traffic_set_fsm();
 
-#endif /* INC_U_TRAFFIC_FSM_H_ */
+#endif /* INC_U_FSM_TRAFFIC_H_ */

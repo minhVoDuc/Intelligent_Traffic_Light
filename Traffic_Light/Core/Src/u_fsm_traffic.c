@@ -4,11 +4,11 @@
  *  Created on: 28 thg 11, 2022
  *      Author: Guest_demo
  */
-#include "u_traffic_fsm.h"
+#include <u_fsm_traffic.h>
 #include "u_global.h"
 
 /*-------------------- init setting --------------------*/
-uint32_t	trafficDuration[3] = {5000, 3000, 2000};
+//uint32_t	trafficDuration[3] = {5000, 3000, 2000};
 
 void traffic_init() {
 	global_state = INIT_MODE;
@@ -22,38 +22,47 @@ void traffic_init() {
 void traffic_auto_fsm_A() {
 	switch(auto_A_state) {
 	case AUTO_INIT:
+		//change mode
 		auto_A_state = AUTO_RED;
 		timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_RED]);
 		break;
 
 	/////////////////////////////////////////////////////
 	case AUTO_RED:
+		//TODO
+		led_turn_on(TRAFFIC_1, LED_RED);
+
+		//change mode
 		if (timer_checkFlag(TIMER_AUTO_A)) { //change led
 			auto_A_state = AUTO_GREEN;
+			pd_active_state = PD_A_RED; //change pedestrian led to red
 			timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_GREEN]);
 		}
-
-		led_turn_on(TRAFFIC_1, LED_RED);
 		break;
 
 	/////////////////////////////////////////////////////
 	case AUTO_GREEN:
+		//TODO
+		led_turn_on(TRAFFIC_1, LED_GREEN);
+
+		//change mode
 		if (timer_checkFlag(TIMER_AUTO_A)) { //change led
 			auto_A_state = AUTO_YELLOW;
 			timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_YELLOW]);
 		}
-
-		led_turn_on(TRAFFIC_1, LED_GREEN);
 		break;
 
 	/////////////////////////////////////////////////////
 	case AUTO_YELLOW:
+		//TODO
+		led_turn_on(TRAFFIC_1, LED_YELLOW);
+
+		//change mode
 		if (timer_checkFlag(TIMER_AUTO_A)) { //change led
 			auto_A_state = AUTO_RED;
+			pd_active_state = PD_A_GREEN; //change pedestrian led to green
 			timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_RED]);
 		}
-
-		led_turn_on(TRAFFIC_1, LED_YELLOW);
 		break;
 
 	/////////////////////////////////////////////////////
@@ -65,38 +74,45 @@ void traffic_auto_fsm_A() {
 void traffic_auto_fsm_B() {
 	switch(auto_B_state) {
 	case AUTO_INIT:
+		//change mode
 		auto_B_state = AUTO_GREEN;
 		timer_setDuration(TIMER_AUTO_B, trafficDuration[LED_GREEN]);
 		break;
 
 	/////////////////////////////////////////////////////
 	case AUTO_RED:
+		//TODO
+		led_turn_on(TRAFFIC_2, LED_RED);
+
+		//change mode
 		if (timer_checkFlag(TIMER_AUTO_B)) { //change led
 			auto_B_state = AUTO_GREEN;
 			timer_setDuration(TIMER_AUTO_B, trafficDuration[LED_GREEN]);
 		}
-
-		led_turn_on(TRAFFIC_2, LED_RED);
 		break;
 
 	/////////////////////////////////////////////////////
 	case AUTO_GREEN:
+		//TODO
+		led_turn_on(TRAFFIC_2, LED_GREEN);
+
+		//change mode
 		if (timer_checkFlag(TIMER_AUTO_B)) { //change led
 			auto_B_state = AUTO_YELLOW;
 			timer_setDuration(TIMER_AUTO_B, trafficDuration[LED_YELLOW]);
 		}
-
-		led_turn_on(TRAFFIC_2, LED_GREEN);
 		break;
 
 	/////////////////////////////////////////////////////
 	case AUTO_YELLOW:
+		//TODO
+		led_turn_on(TRAFFIC_2, LED_YELLOW);
+
+		//change mode
 		if (timer_checkFlag(TIMER_AUTO_B)) { //change led
 			auto_B_state = AUTO_RED;
 			timer_setDuration(TIMER_AUTO_B, trafficDuration[LED_RED]);
 		}
-
-		led_turn_on(TRAFFIC_2, LED_YELLOW);
 		break;
 
 	/////////////////////////////////////////////////////
@@ -109,47 +125,62 @@ void traffic_auto_fsm_B() {
 void traffic_manual_fsm() {
 	switch(manual_state) {
 	case MN_INIT:
+		//change mode
 		manual_state = MN_RED0;
 		break;
 
 	///////////////////////////////////////////////////////////
+	// traffic A - red; traffic B - green
 	case MN_RED0:
+		//TODO
+		led_turn_on(TRAFFIC_1, LED_RED);
+		led_turn_on(TRAFFIC_2, LED_GREEN);
+
+		//change mode
 		if (button_isPressed(BTN_2)) { //when pressing button 2
 			manual_state = MN_RED1;
 		}
-
-		led_turn_on(TRAFFIC_1, LED_RED);
-		led_turn_on(TRAFFIC_2, LED_GREEN);
 		break;
 
 	///////////////////////////////////////////////////////////
+	// traffic A - red; traffic B - yellow
 	case MN_RED1:
-		if (button_isPressed(BTN_2)) { //when pressing button 2
-			manual_state = MN_GREEN;
-		}
-
+		//TODO
 //		led_turn_on(TRAFFIC_1, LED_RED);
 		led_turn_on(TRAFFIC_2, LED_YELLOW);
+
+		//change mode
+		if (button_isPressed(BTN_2)) { //when pressing button 2
+			manual_state = MN_GREEN;
+			pd_active_state = PD_A_RED; //change pedestrian led to red
+		}
 		break;
 
 	///////////////////////////////////////////////////////////
+	// traffic A - green; traffic B - red
 	case MN_GREEN:
+		//TODO
+		led_turn_on(TRAFFIC_1, LED_GREEN);
+		led_turn_on(TRAFFIC_2, LED_RED);
+
+		//change mode
 		if (button_isPressed(BTN_2)) { //when pressing button 2
 			manual_state = MN_YELLOW;
 		}
-
-		led_turn_on(TRAFFIC_1, LED_GREEN);
-		led_turn_on(TRAFFIC_2, LED_RED);
 		break;
 
 	///////////////////////////////////////////////////////////
+	// traffic A - yellow; traffic B - red
 	case MN_YELLOW:
-		if (button_isPressed(BTN_2)) { //when pressing button 2
-			manual_state = MN_RED0;
-		}
-
+		//TODO
 		led_turn_on(TRAFFIC_1, LED_YELLOW);
 //		led_turn_on(TRAFFIC_2, LED_RED);
+
+		//change mode
+		if (button_isPressed(BTN_2)) { //when pressing button 2
+			manual_state = MN_RED0;
+			pd_active_state = PD_A_GREEN; //change pedestrian led to green
+		}
 		break;
 
 	///////////////////////////////////////////////////////////
@@ -160,6 +191,7 @@ void traffic_manual_fsm() {
 
 /*-------------------- set fsm -------------------------*/
 void duration_inc(uint8_t led_type) {
+	// increase specific duration by 1 unit
 	trafficDuration[led_type] += DURATION_UNIT;
 	if (trafficDuration[led_type] > DURATION_MAX) { //if duration over max, reset to DURATION_UNIT
 		trafficDuration[led_type] -= DURATION_MAX;
@@ -177,13 +209,6 @@ void traffic_set_fsm() {
 
 	//////////////////////////////////////////////////////////////
 	case SET_RED:
-		//change led
-		if (button_isPressed(BTN_2)) {
-			set_state = SET_GREEN;
-#ifdef PROTEUS
-			uart_send_num("Led green: ", trafficDuration[LED_GREEN]);
-#endif
-		}
 		//TODO
 		led_turn_on(TRAFFIC_1, LED_RED);
 		led_turn_on(TRAFFIC_2, LED_RED);
@@ -206,18 +231,17 @@ void traffic_set_fsm() {
 			}
 		}
 
+		//change led
+		if (button_isPressed(BTN_2)) {
+			set_state = SET_GREEN;
+#ifdef PROTEUS
+			uart_send_num("Led green: ", trafficDuration[LED_GREEN]);
+#endif
+		}
 		break;
 
 	//////////////////////////////////////////////////////////////
 	case SET_GREEN:
-		//change led
-		if (button_isPressed(BTN_2)){
-			set_state = SET_YELLOW;
-#ifdef PROTEUS
-			uart_send_num("Led yellow: ", trafficDuration[LED_YELLOW]);
-#endif
-		}
-
 		//TODO
 		led_turn_on(TRAFFIC_1, LED_GREEN);
 		led_turn_on(TRAFFIC_2, LED_GREEN);
@@ -240,18 +264,17 @@ void traffic_set_fsm() {
 			}
 		}
 
+		//change led
+		if (button_isPressed(BTN_2)){
+			set_state = SET_YELLOW;
+#ifdef PROTEUS
+			uart_send_num("Led yellow: ", trafficDuration[LED_YELLOW]);
+#endif
+		}
 		break;
 
 	//////////////////////////////////////////////////////////////
 	case SET_YELLOW:
-		//change led
-		if (button_isPressed(BTN_2)){
-			set_state = SET_RED;
-#ifdef PROTEUS
-			uart_send_num("Led red: ", trafficDuration[LED_RED]);
-#endif
-		}
-
 		//TODO
 		led_turn_on(TRAFFIC_1, LED_YELLOW);
 		led_turn_on(TRAFFIC_2, LED_YELLOW);
@@ -274,6 +297,13 @@ void traffic_set_fsm() {
 			}
 		}
 
+		//change led
+		if (button_isPressed(BTN_2)){
+			set_state = SET_RED;
+#ifdef PROTEUS
+			uart_send_num("Led red: ", trafficDuration[LED_RED]);
+#endif
+		}
 		break;
 
 	//////////////////////////////////////////////////////////////
@@ -292,82 +322,83 @@ void traffic_fsm() {
 
 	///////////////////////////////////////////////
 	case AUTO_MODE:
+		//TODO
+		traffic_auto_fsm_A();
+		traffic_auto_fsm_B();
+
 		//change mode
 		if (button_isPressed(BTN_1)) { //when pressing button 1
 			led_clear_all();
 			global_state = MANUAL_MODE;
 			switch (auto_A_state) { //manual mode with previous auto state
-			case AUTO_RED:
+			case AUTO_RED: // traffic A = red
 				switch (auto_B_state){
-				case AUTO_GREEN:
+				case AUTO_GREEN: //traffic B = green
 					manual_state = MN_RED0;
 					break;
-				case AUTO_YELLOW:
+				case AUTO_YELLOW: //traffic B = yellow
 					manual_state = MN_RED1;
 					break;
 				}
 				break;
-			case AUTO_GREEN:
+			case AUTO_GREEN: // traffic A = green
 				manual_state = MN_GREEN;
 				break;
-			case AUTO_YELLOW:
+			case AUTO_YELLOW: // traffic A = yellow
 				manual_state = MN_YELLOW;
-				break;
-			default:
 				break;
 			}
 		}
-
-		//TODO
-		traffic_auto_fsm_A();
-		traffic_auto_fsm_B();
 		break;
 
 	///////////////////////////////////////////////
 	case MANUAL_MODE:
+		//TODO
+		traffic_manual_fsm();
+
 		//change mode
 		if (button_isPressed(BTN_1)) { //when pressing button 1
 			global_state = SET_MODE;
 			set_state = SET_INIT;
-//			auto_A_state = AUTO_INIT;
-//			auto_B_state = AUTO_INIT;
-//			timer_clear(TIMER_AUTO_A);
-//			timer_clear(TIMER_AUTO_A);
 			led_clear_all();
 		}
-
-		//TODO
-		traffic_manual_fsm();
 		break;
 
 	///////////////////////////////////////////////
 	case SET_MODE:
+		//TODO
+		traffic_set_fsm();
+
 		//change mode
 		if (button_isPressed(BTN_1)) { //when pressing button 1
 			global_state = AUTO_MODE;
 			led_clear_all();
-			timer_clear(TIMER_AUTO_A);
-			timer_clear(TIMER_AUTO_B);
+			timer_clear(TIMER_AUTO_A); //clear timer, prepare for auto mode
+			timer_clear(TIMER_AUTO_B); //clear timer, prepare for auto mode
 			switch(manual_state) { //auto mode with previous manual state
-			case MN_RED0:
+
+			case MN_RED0: //traffic A: red; traffic B: green
 				auto_A_state = AUTO_RED;
 				timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_RED]);
 				auto_B_state = AUTO_GREEN;
 				timer_setDuration(TIMER_AUTO_B, trafficDuration[LED_GREEN]);
 				break;
-			case MN_RED1:
+
+			case MN_RED1: //traffic A: red; traffic B: yellow
 				auto_A_state = AUTO_RED;
 				timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_YELLOW]);
 				auto_B_state = AUTO_YELLOW;
 				timer_setDuration(TIMER_AUTO_B, trafficDuration[LED_YELLOW]);
 				break;
-			case MN_GREEN:
+
+			case MN_GREEN: //traffic A: green; traffic B: red
 				auto_A_state = AUTO_GREEN;
 				timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_GREEN]);
 				auto_B_state = AUTO_RED;
 				timer_setDuration(TIMER_AUTO_B, trafficDuration[LED_RED]);
 				break;
-			case MN_YELLOW:
+
+			case MN_YELLOW: //traffic A: yellow; traffic B: red
 				auto_A_state = AUTO_YELLOW;
 				timer_setDuration(TIMER_AUTO_A, trafficDuration[LED_YELLOW]);
 				auto_B_state = AUTO_RED;
@@ -375,9 +406,6 @@ void traffic_fsm() {
 				break;
 			}
 		}
-
-		//TODO
-		traffic_set_fsm();
 		break;
 
 	///////////////////////////////////////////////

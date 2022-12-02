@@ -1,5 +1,5 @@
-Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
- ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
+Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/u_fsm_traffic.h \
+ ../Core/Inc/main.h ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Core/Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h \
@@ -25,8 +25,9 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  ../Core/Inc/u_global.h ../Core/Inc/u_i_button.h ../Core/Inc/u_i_buzzer.h \
- ../Core/Inc/u_i_led.h ../Core/Inc/u_i_timer.h ../Core/Inc/u_test_IO.h \
- ../Core/Inc/u_traffic_fsm.h
+ ../Core/Inc/u_i_led.h ../Core/Inc/u_i_timer.h ../Core/Inc/u_test_IO.h
+
+../Core/Inc/u_fsm_traffic.h:
 
 ../Core/Inc/main.h:
 
@@ -91,5 +92,3 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/u_i_timer.h:
 
 ../Core/Inc/u_test_IO.h:
-
-../Core/Inc/u_traffic_fsm.h:
