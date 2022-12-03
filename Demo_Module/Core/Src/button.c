@@ -45,9 +45,9 @@ void button_reading(void){
 		case BTN_3:
 			KeyReg0[i] = HAL_GPIO_ReadPin(GPIOA, BTN_3_Pin);
 			break;
-//		case BTN_PD:
-//			KeyReg0[i] = HAL_GPIO_ReadPin(GPIOA, PD_BTN_Pin);
-//			break;
+		case BTN_PD:
+			KeyReg0[i] = HAL_GPIO_ReadPin(GPIOA, BTN_PD_Pin);
+			break;
 		default:
 			break;
 		}

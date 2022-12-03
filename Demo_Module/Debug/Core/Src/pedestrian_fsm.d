@@ -1,7 +1,7 @@
-Core/Src/global.o: ../Core/Src/global.c ../Core/Inc/global.h \
- ../Core/Inc/button.h ../Core/Inc/led.h ../Core/Inc/timer.h \
- ../Core/Inc/uart.h ../Core/Inc/main.h \
- ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
+Core/Src/pedestrian_fsm.o: ../Core/Src/pedestrian_fsm.c \
+ ../Core/Inc/pedestrian_fsm.h ../Core/Inc/global.h ../Core/Inc/button.h \
+ ../Core/Inc/led.h ../Core/Inc/timer.h ../Core/Inc/uart.h \
+ ../Core/Inc/main.h ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Core/Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h \
@@ -27,6 +27,8 @@ Core/Src/global.o: ../Core/Src/global.c ../Core/Inc/global.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  ../Core/Inc/duration.h
+
+../Core/Inc/pedestrian_fsm.h:
 
 ../Core/Inc/global.h:
 

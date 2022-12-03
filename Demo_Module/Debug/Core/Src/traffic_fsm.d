@@ -26,7 +26,7 @@ Core/Src/traffic_fsm.o: ../Core/Src/traffic_fsm.c \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
- ../Core/Inc/uart.h
+ ../Core/Inc/duration.h ../Core/Inc/uart.h
 
 ../Core/Inc/traffic_fsm.h:
 
@@ -91,5 +91,7 @@ Core/Src/traffic_fsm.o: ../Core/Src/traffic_fsm.c \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
+
+../Core/Inc/duration.h:
 
 ../Core/Inc/uart.h:

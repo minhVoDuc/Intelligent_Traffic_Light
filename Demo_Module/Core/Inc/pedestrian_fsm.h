@@ -1,0 +1,23 @@
+/*
+ * pedestrian_fsm.h
+ *
+ *  Created on: 2 thg 12, 2022
+ *      Author: Guest_demo
+ */
+
+#ifndef INC_PEDESTRIAN_FSM_H_
+#define INC_PEDESTRIAN_FSM_H_
+
+#include <stdint.h>
+
+//define for global pedestrian fsm
+#define PD_INIT		50
+#define PD_IDLE		51
+#define PD_ACTIVE	52
+
+//for fsm
+void pedestrian_init();
+void pedestrian_fsm();
+void pedestrian_active_fsm();
+
+#endif /* INC_PEDESTRIAN_FSM_H_ */

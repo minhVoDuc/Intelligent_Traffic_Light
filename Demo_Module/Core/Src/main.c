@@ -27,6 +27,7 @@
 #include "global.h"
 #include "test_IO.h"
 #include "traffic_fsm.h"
+#include "pedestrian_fsm.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,7 +47,7 @@
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim2;
 
-UART_HandleTypeDef huart2;
+//UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 
@@ -104,6 +105,7 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim2);
   timer_init();
   traffic_init();
+  pedestrian_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -119,6 +121,7 @@ int main(void)
 		HAL_GPIO_TogglePin(GPIOA, LED_TEST_0_Pin);
 	}
 	traffic_fsm();
+	pedestrian_fsm();
 //	test_button();
   }
   /* USER CODE END 3 */
@@ -248,13 +251,17 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, LED_TEST_0_Pin|RED_0_Pin|GREEN_0_Pin|YELLOW_0_Pin
-                          |RED_1_Pin|GREEN_1_Pin|YELLOW_1_Pin, GPIO_PIN_SET);
+                          |RED_1_Pin|GREEN_1_Pin|YELLOW_1_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : BTN_1_Pin BTN_2_Pin BTN_3_archv_Pin BTN_3_Pin */
-  GPIO_InitStruct.Pin = BTN_1_Pin|BTN_2_Pin|BTN_3_archv_Pin|BTN_3_Pin;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, PD_RED_Pin|PD_GREEN_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : BTN_1_Pin BTN_2_Pin BTN_3_Pin BTN_PD_Pin */
+  GPIO_InitStruct.Pin = BTN_1_Pin|BTN_2_Pin|BTN_3_Pin|BTN_PD_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -268,12 +275,20 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : PD_RED_Pin PD_GREEN_Pin */
+  GPIO_InitStruct.Pin = PD_RED_Pin|PD_GREEN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
 }
 
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	timer_run();
 	button_reading();
+	duration_run();
 }
 /* USER CODE END 4 */
 

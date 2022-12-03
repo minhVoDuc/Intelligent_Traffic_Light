@@ -26,7 +26,7 @@ Core/Src/test_IO.o: ../Core/Src/test_IO.c ../Core/Inc/test_IO.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
- ../Core/Inc/main.h
+ ../Core/Inc/duration.h ../Core/Inc/main.h
 
 ../Core/Inc/test_IO.h:
 
@@ -91,5 +91,7 @@ Core/Src/test_IO.o: ../Core/Src/test_IO.c ../Core/Inc/test_IO.h \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
+
+../Core/Inc/duration.h:
 
 ../Core/Inc/main.h:

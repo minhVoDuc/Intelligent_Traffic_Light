@@ -1,7 +1,8 @@
-traffic_fsm.c:15:6:traffic_init	4	static
-traffic_fsm.c:24:6:traffic_auto_fsm_A	8	static
-traffic_fsm.c:70:6:traffic_auto_fsm_B	8	static
-traffic_fsm.c:117:6:traffic_manual_fsm	8	static
-traffic_fsm.c:177:6:duration_inc	16	static
-traffic_fsm.c:184:6:traffic_set_fsm	8	static
-traffic_fsm.c:297:6:traffic_fsm	8	static
+traffic_fsm.c:17:6:traffic_init	4	static
+traffic_fsm.c:26:6:traffic_send_duration	8	static
+traffic_fsm.c:34:6:traffic_auto_fsm_A	8	static
+traffic_fsm.c:93:6:traffic_auto_fsm_B	8	static
+traffic_fsm.c:144:6:traffic_manual_fsm	8	static
+traffic_fsm.c:212:6:duration_inc	16	static
+traffic_fsm.c:220:6:traffic_set_fsm	8	static
+traffic_fsm.c:305:6:traffic_fsm	8	static
