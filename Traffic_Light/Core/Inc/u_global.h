@@ -14,6 +14,8 @@
 #include "u_i_buzzer.h"
 #include "u_i_led.h"
 #include "u_i_timer.h"
+#include "u_i_duration.h"
+#include "u_i_uart.h"
 
 //function for duration
 extern uint32_t trafficDuration[3];
@@ -27,7 +29,6 @@ extern uint8_t manual_state;
 extern uint8_t set_state;
 
 // state for pedestrian
-
 //define for active pedestrian fsm
 #define PD_A_INIT	60
 #define PD_A_RED	61

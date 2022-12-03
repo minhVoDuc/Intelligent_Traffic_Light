@@ -16,8 +16,10 @@ C_SRCS += \
 ../Core/Src/u_global.c \
 ../Core/Src/u_i_button.c \
 ../Core/Src/u_i_buzzer.c \
+../Core/Src/u_i_duration.c \
 ../Core/Src/u_i_led.c \
 ../Core/Src/u_i_timer.c \
+../Core/Src/u_i_uart.c \
 ../Core/Src/u_test_IO.c 
 
 OBJS += \
@@ -32,8 +34,10 @@ OBJS += \
 ./Core/Src/u_global.o \
 ./Core/Src/u_i_button.o \
 ./Core/Src/u_i_buzzer.o \
+./Core/Src/u_i_duration.o \
 ./Core/Src/u_i_led.o \
 ./Core/Src/u_i_timer.o \
+./Core/Src/u_i_uart.o \
 ./Core/Src/u_test_IO.o 
 
 C_DEPS += \
@@ -48,8 +52,10 @@ C_DEPS += \
 ./Core/Src/u_global.d \
 ./Core/Src/u_i_button.d \
 ./Core/Src/u_i_buzzer.d \
+./Core/Src/u_i_duration.d \
 ./Core/Src/u_i_led.d \
 ./Core/Src/u_i_timer.d \
+./Core/Src/u_i_uart.d \
 ./Core/Src/u_test_IO.d 
 
 

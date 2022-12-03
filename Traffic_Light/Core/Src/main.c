@@ -18,13 +18,14 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include <u_fsm_traffic.h>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "u_global.h"
 #include "u_test_IO.h"
+#include "u_fsm_traffic.h"
+#include "u_fsm_pedestrian.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,7 +46,7 @@
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 
-UART_HandleTypeDef huart2;
+//UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 
@@ -111,6 +112,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  traffic_fsm();
+	  pedestrian_fsm();
 //	  test_button();
   }
   /* USER CODE END 3 */
@@ -343,6 +345,7 @@ static void MX_GPIO_Init(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	timer_run();
 	button_reading();
+	duration_run();
 }
 /* USER CODE END 4 */
 
