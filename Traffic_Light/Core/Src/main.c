@@ -44,7 +44,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim2;
-TIM_HandleTypeDef htim3;
+//TIM_HandleTypeDef htim3;
 
 //UART_HandleTypeDef huart2;
 

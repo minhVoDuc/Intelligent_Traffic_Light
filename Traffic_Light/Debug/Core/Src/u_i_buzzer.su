@@ -1,0 +1,3 @@
+u_i_buzzer.c:12:6:buzzer_modify_volume	16	static
+u_i_buzzer.c:16:6:buzzer_turn_on	8	static
+u_i_buzzer.c:20:6:buzzer_turn_off	8	static

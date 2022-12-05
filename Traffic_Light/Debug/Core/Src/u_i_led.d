@@ -25,8 +25,8 @@ Core/Src/u_i_led.o: ../Core/Src/u_i_led.c ../Core/Inc/u_i_led.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  ../Core/Inc/u_global.h ../Core/Inc/u_i_button.h ../Core/Inc/u_i_buzzer.h \
- ../Core/Inc/u_i_led.h ../Core/Inc/u_i_timer.h ../Core/Inc/u_i_duration.h \
- ../Core/Inc/u_i_uart.h ../Core/Inc/main.h
+ ../Core/Inc/main.h ../Core/Inc/u_i_led.h ../Core/Inc/u_i_timer.h \
+ ../Core/Inc/u_i_duration.h ../Core/Inc/u_i_uart.h
 
 ../Core/Inc/u_i_led.h:
 
@@ -88,6 +88,8 @@ Core/Src/u_i_led.o: ../Core/Src/u_i_led.c ../Core/Inc/u_i_led.h \
 
 ../Core/Inc/u_i_buzzer.h:
 
+../Core/Inc/main.h:
+
 ../Core/Inc/u_i_led.h:
 
 ../Core/Inc/u_i_timer.h:
@@ -95,5 +97,3 @@ Core/Src/u_i_led.o: ../Core/Src/u_i_led.c ../Core/Inc/u_i_led.h \
 ../Core/Inc/u_i_duration.h:
 
 ../Core/Inc/u_i_uart.h:
-
-../Core/Inc/main.h:
