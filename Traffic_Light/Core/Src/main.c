@@ -100,7 +100,6 @@ int main(void)
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
-  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   timer_init();
   traffic_init();
   /* USER CODE END 2 */
