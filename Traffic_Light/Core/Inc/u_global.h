@@ -41,4 +41,11 @@ extern uint8_t set_state;
 extern uint8_t pd_active_state;
 extern uint8_t pd_led_state;
 
+// state for buzzer
+//define for blinky buzzer
+#define BZ_ON		81
+#define BZ_OFF		82
+
+extern uint8_t buzzer_state;
+
 #endif /* INC_U_GLOBAL_H_ */

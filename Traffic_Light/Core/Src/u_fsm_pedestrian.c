@@ -32,8 +32,14 @@ void pedestrian_active_fsm() {
 	pd_duration = global_get_totalDuration(); //get total duration
 	if (timer_checkFlag(TIMER_BLINK)) { //check timer for blink led
 		timer_setDuration(TIMER_BLINK, PD_DUR_BLINK);
-		if (pd_led_state == PD_LED_OFF) pd_led_state = PD_LED_ON;
-		else pd_led_state = PD_LED_OFF;
+		if (pd_led_state == PD_LED_OFF) {
+			pd_led_state = PD_LED_ON;
+			buzzer_state = BZ_ON;
+		}
+		else {
+			pd_led_state = PD_LED_OFF;
+			buzzer_state = BZ_OFF;
+		}
 	}
 
 	switch (pd_active_state) {
@@ -46,7 +52,10 @@ void pedestrian_active_fsm() {
 		//TODO
 		pedestrian_send_duration();
 		if (pedestrian_currDur > 3) led_turn_on(PEDESTRIAN, LED_RED); //turn led red on when duration over 3 second
-		else led_pedestrian_blinky(LED_RED); //otherwise, blink led red
+		else {
+			led_pedestrian_blinky(LED_RED); //otherwise, blink led red
+			buzzer_blinky();
+		}
 
 		if (button_isPressed(BTN_PD)) { //reset duration for pedestrian led
 			timer_clear(TIMER_PD);
@@ -62,7 +71,10 @@ void pedestrian_active_fsm() {
 		//TODO
 		pedestrian_send_duration();
 		if (pedestrian_currDur > 3) led_turn_on(PEDESTRIAN, LED_GREEN); //turn led green on when duration over 3 second
-		else led_pedestrian_blinky(LED_GREEN); //otherwise, blink led green
+		else {
+			led_pedestrian_blinky(LED_GREEN); //otherwise, blink led green
+			buzzer_blinky();
+		}
 
 		if (button_isPressed(BTN_PD)) { //reset duration for pedestrian led
 			timer_clear(TIMER_PD);

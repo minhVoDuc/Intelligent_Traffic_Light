@@ -6,6 +6,7 @@
  */
 
 #include "u_i_buzzer.h"
+#include "u_global.h"
 
 TIM_HandleTypeDef htim3;
 
@@ -21,7 +22,7 @@ void buzzer_turn_off() {
 	buzzer_modify_volume(0);
 }
 
-void buzzer_bliny() {
+void buzzer_blinky() {
 	if (buzzer_state == BZ_ON) buzzer_turn_on();
 	else buzzer_turn_off();
 }
