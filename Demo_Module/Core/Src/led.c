@@ -7,6 +7,7 @@
 
 #include "led.h"
 #include "main.h"
+#include "global.h"
 
 #ifdef BOARD
 //clear all led
@@ -209,5 +210,10 @@ void led_turn_off(uint8_t led_index, uint8_t led_type) {
 	default:
 		break;
 	}
+}
+
+void led_pedestrian_blinky(uint8_t led_type) {
+	if (pd_led_state == PD_LED_ON) led_turn_on(PEDESTRIAN, led_type);
+	else led_turn_off(PEDESTRIAN, led_type);
 }
 #endif

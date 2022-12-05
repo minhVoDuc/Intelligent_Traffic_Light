@@ -34,6 +34,11 @@ extern uint8_t set_state;
 #define PD_A_RED	61
 #define PD_A_GREEN	62
 
+//define for blinky pedestrian led
+#define PD_LED_ON	71
+#define PD_LED_OFF	72
+
 extern uint8_t pd_active_state;
+extern uint8_t pd_led_state;
 
 #endif /* INC_GLOBAL_H_ */

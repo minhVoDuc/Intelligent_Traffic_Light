@@ -1,4 +1,4 @@
 pedestrian_fsm.c:18:6:pedestrian_init	4	static
-pedestrian_fsm.c:23:6:pedestrian_send_duration	8	static
-pedestrian_fsm.c:31:6:pedestrian_active_fsm	8	static
-pedestrian_fsm.c:74:6:pedestrian_fsm	8	static
+pedestrian_fsm.c:24:6:pedestrian_send_duration	8	static
+pedestrian_fsm.c:32:6:pedestrian_active_fsm	8	static
+pedestrian_fsm.c:83:6:pedestrian_fsm	8	static

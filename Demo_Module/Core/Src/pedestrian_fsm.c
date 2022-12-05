@@ -18,6 +18,7 @@ uint32_t	pd_duration = 0,
 void pedestrian_init() {
 	pd_state = PD_INIT;
 	pd_active_state = PD_A_INIT;
+	pd_led_state = PD_LED_OFF;
 }
 
 void pedestrian_send_duration() { //send duration to uart
@@ -29,7 +30,13 @@ void pedestrian_send_duration() { //send duration to uart
 }
 
 void pedestrian_active_fsm() {
-	pd_duration = global_get_totalDuration();
+	pd_duration = global_get_totalDuration(); //ge
+	if (timer_checkFlag(TIMER_BLINK)) {
+		timer_setDuration(TIMER_BLINK, PD_DUR_BLINK);
+		if (pd_led_state == PD_LED_OFF) pd_led_state = PD_LED_ON;
+		else pd_led_state = PD_LED_OFF;
+	}
+
 	switch (pd_active_state) {
 	case PD_A_INIT:
 		pd_active_state = PD_A_RED;
@@ -38,8 +45,9 @@ void pedestrian_active_fsm() {
 	///////////////////////////////////////////
 	case PD_A_RED:
 		//TODO
-		led_turn_on(PEDESTRIAN, LED_RED); //turn led red on
 		pedestrian_send_duration();
+		if (pedestrian_currDur > 3) led_turn_on(PEDESTRIAN, LED_RED); //turn led red on when duration over 3 second
+		else led_pedestrian_blinky(LED_RED); //otherwise, blink led red
 
 		if (button_isPressed(BTN_PD)) { //reset duration for pedestrian led
 			timer_clear(TIMER_PD);
@@ -53,8 +61,9 @@ void pedestrian_active_fsm() {
 	///////////////////////////////////////////
 	case PD_A_GREEN:
 		//TODO
-		led_turn_on(PEDESTRIAN, LED_GREEN); //turn led green on
 		pedestrian_send_duration();
+		if (pedestrian_currDur > 3) led_turn_on(PEDESTRIAN, LED_GREEN); //turn led green on when duration over 3 second
+		else led_pedestrian_blinky(LED_GREEN); //otherwise, blink led green
 
 		if (button_isPressed(BTN_PD)) { //reset duration for pedestrian led
 			timer_clear(TIMER_PD);
@@ -88,10 +97,12 @@ void pedestrian_fsm() {
 
 		if (button_isPressed(BTN_PD)) {
 			pd_state = PD_ACTIVE;
-			pd_duration = global_get_totalDuration();
-			timer_clear(TIMER_PD);
-			timer_setDuration(TIMER_PD, pd_duration);
-			duration_set(DUR_PEDESTRIAN, pd_duration);
+			pd_duration = global_get_totalDuration(); //get total duration for a cycle of traffic
+			timer_clear(TIMER_PD); //clear timer for pedestrian (if yes)
+			timer_setDuration(TIMER_PD, pd_duration); //set new timer for pedestrian
+			duration_set(DUR_PEDESTRIAN, pd_duration);//set duration for counter
+			timer_clear(TIMER_BLINK);
+			timer_setDuration(TIMER_BLINK, PD_DUR_BLINK); //set timer for blinking led for the last 3 second
 		}
 		break;
 

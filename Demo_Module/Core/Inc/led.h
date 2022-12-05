@@ -24,12 +24,14 @@
 void led_clear_all();
 void led_turn_on(uint8_t led_index, uint8_t led_type);
 void led_turn_off(uint8_t led_index);
+void led_pedestrian_blinky(uint8_t led_type);
 #endif
 
 #ifdef PROTEUS
 void led_clear_all();
 void led_turn_on(uint8_t led_index, uint8_t led_type);
 void led_turn_off(uint8_t led_index, uint8_t led_type);
+void led_pedestrian_blinky(uint8_t led_type);
 #endif
 
 #endif /* INC_LED_H_ */
