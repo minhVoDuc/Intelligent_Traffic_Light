@@ -16,6 +16,7 @@ uint8_t set_state 		= 0;
 
 // initialize state for traffic
 uint8_t pd_active_state = 0;
+uint8_t pd_led_state = 0;
 
 //function for duration
 uint32_t trafficDuration[3] = {5000, 3000, 2000};
