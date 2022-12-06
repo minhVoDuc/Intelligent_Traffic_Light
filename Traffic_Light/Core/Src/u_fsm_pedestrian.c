@@ -61,6 +61,7 @@ void pedestrian_active_fsm() {
 			timer_clear(TIMER_PD);
 			timer_setDuration(TIMER_PD, pd_duration);
 			duration_set(DUR_PEDESTRIAN, pd_duration);
+			buzzer_turn_off();
 		}
 
 		//change mode
@@ -80,6 +81,7 @@ void pedestrian_active_fsm() {
 			timer_clear(TIMER_PD);
 			timer_setDuration(TIMER_PD, pd_duration);
 			duration_set(DUR_PEDESTRIAN, pd_duration);
+			buzzer_turn_off();
 		}
 
 		//change mode
@@ -95,6 +97,7 @@ void pedestrian_fsm() {
 	//check state of pd_state
 	switch (pd_state) {
 	case PD_INIT:
+		//change mode
 		led_turn_off(PEDESTRIAN);
 		pd_state = PD_IDLE;
 		break;
@@ -102,8 +105,11 @@ void pedestrian_fsm() {
 	//////////////////////////////////////////////////////
 	//pedestian led is not active
 	case PD_IDLE:
+		//TODO
+		buzzer_turn_off();
 		led_turn_off(PEDESTRIAN);
 
+		//change mode
 		if (button_isPressed(BTN_PD)) {
 			pd_state = PD_ACTIVE;
 			pd_duration = global_get_totalDuration(); //get total duration for a cycle of traffic
@@ -116,7 +122,7 @@ void pedestrian_fsm() {
 		break;
 
 	//////////////////////////////////////////////////////
-	//pedestrian led active in auto mode
+	//pedestrian led active in active mode
 	case PD_ACTIVE:
 		//TODO
 		pedestrian_active_fsm();

@@ -9,5 +9,7 @@
 #define INC_U_TEST_IO_H_
 
 void test_button();
+void test_pd();
+void test_buzzer();
 
 #endif /* INC_U_TEST_IO_H_ */

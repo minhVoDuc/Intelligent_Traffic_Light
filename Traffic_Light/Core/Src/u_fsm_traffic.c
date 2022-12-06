@@ -163,7 +163,7 @@ void traffic_manual_fsm() {
 	// traffic A - red; traffic B - yellow
 	case MN_RED1:
 		//TODO
-//		led_turn_on(TRAFFIC_1, LED_RED);
+		led_turn_on(TRAFFIC_1, LED_RED);
 		led_turn_on(TRAFFIC_2, LED_YELLOW);
 
 		//change mode
@@ -191,7 +191,7 @@ void traffic_manual_fsm() {
 	case MN_YELLOW:
 		//TODO
 		led_turn_on(TRAFFIC_1, LED_YELLOW);
-//		led_turn_on(TRAFFIC_2, LED_RED);
+		led_turn_on(TRAFFIC_2, LED_RED);
 
 		//change mode
 		if (button_isPressed(BTN_2)) { //when pressing button 2

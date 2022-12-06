@@ -16,7 +16,7 @@
 #define PD_ACTIVE	52
 
 //define duration for blink led
-#define PD_DUR_BLINK	300
+#define PD_DUR_BLINK	200
 
 //for fsm
 void pedestrian_init();

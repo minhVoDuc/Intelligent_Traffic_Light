@@ -15,7 +15,7 @@ void buzzer_modify_volume(uint8_t volumeLevel) {
 }
 
 void buzzer_turn_on() {
-	buzzer_modify_volume(100);
+	buzzer_modify_volume(50);
 }
 
 void buzzer_turn_off() {
