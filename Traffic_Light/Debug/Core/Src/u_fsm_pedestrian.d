@@ -27,7 +27,7 @@ Core/Src/u_fsm_pedestrian.o: ../Core/Src/u_fsm_pedestrian.c \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
  ../Core/Inc/u_i_led.h ../Core/Inc/u_i_timer.h ../Core/Inc/u_i_duration.h \
- ../Core/Inc/u_i_uart.h
+ ../Core/Inc/u_i_uart.h ../Core/Inc/u_fsm_traffic.h
 
 ../Core/Inc/u_fsm_pedestrian.h:
 
@@ -96,3 +96,5 @@ Core/Src/u_fsm_pedestrian.o: ../Core/Src/u_fsm_pedestrian.c \
 ../Core/Inc/u_i_duration.h:
 
 ../Core/Inc/u_i_uart.h:
+
+../Core/Inc/u_fsm_traffic.h:

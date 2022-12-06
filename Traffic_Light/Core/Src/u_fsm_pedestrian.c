@@ -7,9 +7,10 @@
 
 #include "u_fsm_pedestrian.h"
 #include "u_global.h"
+#include "u_fsm_traffic.h"
 
 // declare state for global fsm
-uint8_t 	pd_state;
+uint8_t		pd_state = 0;
 uint32_t	pd_duration = 0,
 			pedestrian_prevDur = 0,
 			pedestrian_currDur = 0;
@@ -29,7 +30,7 @@ void pedestrian_send_duration() { //send duration to uart
 }
 
 void pedestrian_active_fsm() {
-	pd_duration = global_get_totalDuration(); //get total duration
+	pd_duration = 2*global_get_totalDuration(); //get total duration
 	if (timer_checkFlag(TIMER_BLINK)) { //check timer for blink led
 		timer_setDuration(TIMER_BLINK, PD_DUR_BLINK);
 		if (pd_led_state == PD_LED_OFF) {
@@ -51,11 +52,13 @@ void pedestrian_active_fsm() {
 	case PD_A_RED:
 		//TODO
 		pedestrian_send_duration();
-		if (pedestrian_currDur > 3) led_turn_on(PEDESTRIAN, LED_RED); //turn led red on when duration over 3 second
-		else {
-			led_pedestrian_blinky(LED_RED); //otherwise, blink led red
-			buzzer_blinky();
-		}
+//		if (pedestrian_currDur > 3) led_turn_on(PEDESTRIAN, LED_RED); //turn led red on when duration over 3 second
+//		else {
+//			led_pedestrian_blinky(LED_RED); //otherwise, blink led red
+//			buzzer_blinky();
+//		}
+		led_turn_on(PEDESTRIAN, LED_RED);
+		buzzer_turn_off();
 
 		if (button_isPressed(BTN_PD)) { //reset duration for pedestrian led
 			timer_clear(TIMER_PD);
@@ -71,8 +74,11 @@ void pedestrian_active_fsm() {
 	case PD_A_GREEN:
 		//TODO
 		pedestrian_send_duration();
-		if (pedestrian_currDur > 3) led_turn_on(PEDESTRIAN, LED_GREEN); //turn led green on when duration over 3 second
-		else {
+		if (traffic_get_currDur() > 3){ //normal operate when red led A (green pedestrian) duration over 3 second
+			led_turn_on(PEDESTRIAN, LED_GREEN);
+			buzzer_turn_off();
+		}
+		else { //when green led pedestrian in only under 3 seceond
 			led_pedestrian_blinky(LED_GREEN); //otherwise, blink led green
 			buzzer_blinky();
 		}
@@ -81,7 +87,7 @@ void pedestrian_active_fsm() {
 			timer_clear(TIMER_PD);
 			timer_setDuration(TIMER_PD, pd_duration);
 			duration_set(DUR_PEDESTRIAN, pd_duration);
-			buzzer_turn_off();
+//			buzzer_turn_off();
 		}
 
 		//change mode
@@ -109,10 +115,10 @@ void pedestrian_fsm() {
 		buzzer_turn_off();
 		led_turn_off(PEDESTRIAN);
 
-		//change mode
+		//change state
 		if (button_isPressed(BTN_PD)) {
 			pd_state = PD_ACTIVE;
-			pd_duration = global_get_totalDuration(); //get total duration for a cycle of traffic
+			pd_duration = 2*global_get_totalDuration(); //get total duration for a cycle of traffic
 			timer_clear(TIMER_PD); //clear timer for pedestrian (if yes)
 			timer_setDuration(TIMER_PD, pd_duration); //set new timer for pedestrian
 			duration_set(DUR_PEDESTRIAN, pd_duration);//set duration for counter
@@ -128,7 +134,11 @@ void pedestrian_fsm() {
 		pedestrian_active_fsm();
 
 		//Change state
-		if (timer_checkFlag(TIMER_PD)) {
+		if (timer_checkFlag(TIMER_PD)) { //if pedestrian timer is out, turn off pedestrian
+			pd_state = PD_IDLE;
+		}
+		if (traffic_isSetMode()) { //if traffic is in set mode, force turning off pedestrian
+			timer_clear(TIMER_PD);
 			pd_state = PD_IDLE;
 		}
 		break;

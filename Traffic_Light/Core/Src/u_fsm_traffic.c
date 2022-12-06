@@ -20,6 +20,10 @@ void traffic_init() {
 	set_state = SET_INIT;
 }
 
+uint32_t traffic_get_currDur() {
+	return traffic_currDur;
+}
+
 /*------------------- auto fsm -------------------------*/
 void traffic_send_duration() {  //send duration to uart
 	traffic_currDur = duration_get(DUR_TRAFFIC);
@@ -317,6 +321,7 @@ void traffic_fsm() {
 		if (button_isPressed(BTN_1)) { //when pressing button 1
 			led_clear_all();
 			global_state = MANUAL_MODE;
+			traffic_currDur = 10000;
 			duration_set(DUR_TRAFFIC, 0);
 			switch (auto_A_state) { //manual mode with previous auto state
 			case AUTO_RED: // traffic A = red
@@ -409,4 +414,9 @@ void traffic_fsm() {
 	default:
 		break;
 	}
+}
+
+uint8_t traffic_isSetMode() { //check if current state of traffic is set mode or not
+	if (global_state == SET_MODE) return 1;
+	return 0;
 }

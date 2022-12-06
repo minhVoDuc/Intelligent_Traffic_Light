@@ -47,5 +47,7 @@ void traffic_auto_fsm_A();
 void traffic_auto_fsm_B();
 void traffic_manual_fsm();
 void traffic_set_fsm();
+uint32_t traffic_get_currDur();
+uint8_t traffic_isSetMode();
 
 #endif /* INC_U_FSM_TRAFFIC_H_ */
