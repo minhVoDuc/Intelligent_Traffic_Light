@@ -1,0 +1,4 @@
+u_i_led.c:14:6:led_clear_all	8	static
+u_i_led.c:20:6:led_turn_on	16	static
+u_i_led.c:79:6:led_turn_off	16	static
+u_i_led.c:102:6:led_pedestrian_blinky	16	static
