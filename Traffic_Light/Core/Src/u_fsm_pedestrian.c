@@ -29,7 +29,7 @@ void pedestrian_send_duration() { //send duration to uart
 	pedestrian_prevDur = pedestrian_currDur;
 }
 
-void pedestrian_active_fsm() {
+void pedestrian_active_init() {
 	pd_duration = 2*global_get_totalDuration(); //get total duration
 	if (timer_checkFlag(TIMER_BLINK)) { //check timer for blink led
 		timer_setDuration(TIMER_BLINK, PD_DUR_BLINK);
@@ -42,7 +42,11 @@ void pedestrian_active_fsm() {
 			buzzer_state = BZ_OFF;
 		}
 	}
+}
 
+void pedestrian_active_fsm() {
+	//init setting each time this fsm runs
+	pedestrian_active_init();
 	switch (pd_active_state) {
 	case PD_A_INIT:
 		pd_active_state = PD_A_RED;
@@ -52,11 +56,6 @@ void pedestrian_active_fsm() {
 	case PD_A_RED:
 		//TODO
 		pedestrian_send_duration();
-//		if (pedestrian_currDur > 3) led_turn_on(PEDESTRIAN, LED_RED); //turn led red on when duration over 3 second
-//		else {
-//			led_pedestrian_blinky(LED_RED); //otherwise, blink led red
-//			buzzer_blinky();
-//		}
 		led_turn_on(PEDESTRIAN, LED_RED);
 		buzzer_turn_off();
 
@@ -87,7 +86,6 @@ void pedestrian_active_fsm() {
 			timer_clear(TIMER_PD);
 			timer_setDuration(TIMER_PD, pd_duration);
 			duration_set(DUR_PEDESTRIAN, pd_duration);
-//			buzzer_turn_off();
 		}
 
 		//change mode
